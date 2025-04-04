@@ -10,13 +10,12 @@ Um projeto de dominó desenvolvido em Java utilizando conceitos de Programação
 - Forge (para futura integração com Minecraft)  
 
 ## 🎮 Como Jogar
-1. Clone o repositório  
+1. Clone o repositório
 2. Compile e execute o projeto em seu ambiente Java favorito.  
 3. Aproveite o jogo de dominó!  
 
 ## 🛠️ Próximos Passos
-- Melhorar a lógica do jogo.  
-- Criar uma interface gráfica (se aplicável).  
+- Finalizar o código Java.
 - Integrar com Minecraft via mod Forge.  
 
 ## 👥 Contribuidores
