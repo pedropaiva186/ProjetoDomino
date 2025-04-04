@@ -1,3 +1,27 @@
-# Dominó em Java
+# 🁬 Dominó em Java
 
-Este é um projeto desenvolvido por alunos da UFPB para a disciplina de Programação Orientada a Objetos, referente à terceira nota da nossa disciplina. O projeto é dividido em duas etapas, sendo a primeira criar um software capaz de replicar a experiência de um jogo de dominó, de forma que seja usual, prático e interativo, fornecendo uma GUI que facilite o jogo e o torne uma experiência divertida. Ele conterá todas as funcionalidades de um jogo comum, para replicar a experiência, mas apresentará limitações para que o jogo não se torne cansativo e chato, como o recurso de pulo automático, caso o jogador não possua pedras para serem jogadas, e a identificação de quando o jogo acabou porque não há mais pedras disponíveis para serem jogadas, além de conter bots que podem jogar com você ao invés de outros jogadores. A segunda etapa do projeto é adicionar esse jogo dentro de um mod do minecraft por meio da ferramenta forge, possibilitanto que o jogador, caso queira, o adicione ao seu servidor\mundo.
+Um projeto de dominó desenvolvido em Java utilizando conceitos de Programação Orientada a Objetos (POO). O projeto está dividido em duas etapas:  
+1️⃣ Implementação do jogo de dominó em Java.  
+2️⃣ (Opcional) Integração com Minecraft por meio de um mod utilizando a ferramenta Forge.
+
+## 🚀 Tecnologias Utilizadas
+- Java  
+- Programação Orientada a Objetos (POO)  
+- Forge (para futura integração com Minecraft)  
+
+## 🎮 Como Jogar
+1. Clone o repositório  
+2. Compile e execute o projeto em seu ambiente Java favorito.  
+3. Aproveite o jogo de dominó!  
+
+## 🛠️ Próximos Passos
+- Melhorar a lógica do jogo.  
+- Criar uma interface gráfica (se aplicável).  
+- Integrar com Minecraft via mod Forge.  
+
+## 👥 Contribuidores
+- [Antônio Francelino de Pontes Neto](https://github.com/AntonioNeto4)  
+- [João Victor Oliveira](https://github.com/EuVictorOliveira)  
+- [Kevin Morais Mangueira](https://github.com/Melvin2781)  
+- [Pedro Henrique Paiva Souza](https://github.com/PedroP4iv)
+
