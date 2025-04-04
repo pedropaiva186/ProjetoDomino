@@ -1,3 +1,4 @@
+package modelo;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class Jogador {
     public int verificaNumPedras() {
         return pedrasDisponiveis.size();
     }
-
+    // retorna o array de pedras.
     public ArrayList<Pedra> getPedras() {
         return pedrasDisponiveis;
     }
