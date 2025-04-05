@@ -2,19 +2,19 @@ package modelo;
 
 public class Pedra {
     
-    private final char numeroCima;
-    private final char numeroBaixo;
+    private final int numeroCima;
+    private final int numeroBaixo;
 
-    public Pedra(char numeroCima, char numeroBaixo) {
+    public Pedra(int numeroCima, int numeroBaixo) {
         this.numeroCima = numeroCima;
         this.numeroBaixo = numeroBaixo;
     }
 
-    public char getNumCima() {
+    public int getNumCima() {
         return numeroCima;
     }
 
-    public char getNumBaixo() {
+    public int getNumBaixo() {
         return numeroBaixo;
     }
 
