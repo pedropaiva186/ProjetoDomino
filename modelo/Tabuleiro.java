@@ -14,6 +14,7 @@ public class Tabuleiro {
 
     // Método responsável pela criação das pedras do dorme. Caso a operação seja realizada com sucesso, retorna true; caso contrário, retorna false.
     public boolean setDorme() {
+        
     if(dorme.size() == 0){
         for(char cima = 0; cima <= 6; cima++) {
             for(char baixo = 0; baixo <= 6; baixo++) {

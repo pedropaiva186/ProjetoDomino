@@ -1,4 +1,5 @@
 package modelo;
+
 public class Pedra {
     
     private final char numeroCima;

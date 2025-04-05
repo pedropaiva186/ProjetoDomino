@@ -1,6 +1,8 @@
 package modelo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public class Jogador {
 
@@ -27,15 +29,13 @@ public class Jogador {
         pedrasDisponiveis.add(pedra);
     }
 
-    public boolean retiraPedra(int index) {
-        // Verifica se o index é possível de retirar um elemento, e retorna "false" ou "true" a depender se a função funcionar ou não
+    // Tenta retirar a pedra, mas caso haja um erro, ele lança o erro
+    public void retiraPedra(int index) throws IndexOutOfBoundsException{
         try {
             pedrasDisponiveis.remove(index);
         } catch (IndexOutOfBoundsException e) {
-            return false;
+            throw new IndexOutOfBoundsException();
         }
-
-        return true;
     }
 
     // retorna o número de pedras
@@ -47,14 +47,14 @@ public class Jogador {
         return pedrasDisponiveis;
     }
 
-    // Faz a mesma verificação para retornar um elementro Pedra, mas aqui se não encontrar ele retorna "null"
-    public Pedra getPedra(int index) {
+    // Faz a mesma verificação para retornar um elementro Pedra
+    public Pedra getPedra(int index) throws IndexOutOfBoundsException{
         Pedra retorno;
 
         try {
             retorno = pedrasDisponiveis.get(index);
         } catch (IndexOutOfBoundsException e) {
-            return null;
+            throw new IndexOutOfBoundsException();
         }
 
         return retorno;
@@ -68,25 +68,48 @@ public class Jogador {
     }
 
     // Esta função serve para dar ao jogador a liberdade de escolher uma pedra e retorná-la
-    // Mas provalvemente esta função vai mudar, para dar a liberdade do jogador escolher apenas as pedras disponíveis
-    public Pedra jogadorJogaPedra(char cabeca1, char cabeca2) {
+    public Pedra jogadorJogaPedra(char cabeca1, char cabeca2) throws NaoHaPedrasParaSeremJogadas{
         // De alguma forma o jogador vai escolher o index da pedra que vamos retornar
         // A princípio farei com scanner, mas provalvemente, isso vai mudar
-        int index;
-        Pedra pedra;
+        int index = 0, aux = 0, indexPedra = 0;
+        boolean indexValido = false;
+        int[] pedrasPossiveis = new int[6];
+
+        // Serve para verificar quais pedras podem ser jogadas, e preenche um array com o index das disponíveis
+        for(Pedra ped : pedrasDisponiveis) {
+            if(verificaPedraPossiveisParaJogar(ped, cabeca1, cabeca2)) {
+                pedrasPossiveis[aux] = indexPedra;
+                aux++;
+            }
+            indexPedra++;
+        }
+
+        if(aux == 0) {
+            throw new NaoHaPedrasParaSeremJogadas();
+        }
 
         // Recebendo o index do usuário e tratando de forma que ele só pare quando receber um valor válido
         try(Scanner leitor = new Scanner(System.in)) {
             while(true) {
-                System.out.print("Digite o index de uma pedra: ");
+                // Mostra quais as pedras disponíveis
+                System.out.print("Pedras disponíveis:\n");
+                for(int i : pedrasPossiveis) {
+                    System.out.printf("%d\n", i);
+                }
+                System.out.print("Digite o index de uma pedra entre as disponíveis: ");
                 index = leitor.nextInt();
-                pedra = getPedra(index);
+                // Verifica se ela está entre as disponíveis
+                for(int i : pedrasPossiveis) {
+                    if(index == i) {
+                        indexValido = true;
+                        break;
+                    }
+                }
 
-                // Verifica se a pedra foi encontrada e pode ser jogada no tabuleiro
-                if(pedra != null && verificaPedraPossiveisParaJogar(pedra, cabeca1, cabeca2)) {
+                if(indexValido) {
                     break;
                 } else {
-                    System.out.println("Dígito inválido, tente novamente");
+                    System.out.println("Número incorreto, tente novamente!!!");
                 }
             }
 
@@ -95,6 +118,6 @@ public class Jogador {
             return null;
         }
 
-        return pedra;
+        return getPedra(index);
     }
 }
