@@ -6,7 +6,7 @@ public class Tabuleiro {
     private List<Pedra> dorme = new ArrayList<>();
     private List<Pedra> pedrasEsquerda = new ArrayList<>();
     private List<Pedra> pedrasDireita = new ArrayList<>();
-    private Jogador[] jogadores = new Jogador[2];
+    private Humano[] jogadores = new Humano[4];
 
     public Tabuleiro(){
         setDorme();

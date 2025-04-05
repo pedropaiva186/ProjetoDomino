@@ -15,7 +15,7 @@ public class Maquina extends Jogador{
     }
 
     // Esse método basicamente replica a forma como o método de jogar pedra funciona, porém, ele aleatoriza o index da pedra jogada
-    public Pedra jogaSozinho(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas{
+    public Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas{
         Random randomizer = new Random();
         int[] pedrasDispo = super.verificaPedrasDisponiveis(cabeca1, cabeca2);
         int index;
