@@ -38,6 +38,11 @@ public class Jogador {
         }
     }
 
+    // Método para retirar a pedra a partir dela mesma, e não pelo index
+    public void retiraPedra(Pedra ped) {
+        pedrasDisponiveis.remove(ped);
+    }
+
     // retorna o número de pedras
     public int verificaNumPedras() {
         return pedrasDisponiveis.size();
