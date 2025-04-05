@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public abstract class Jogador {
+    
     protected final String nomeJog;
     protected final ArrayList<Pedra> pedrasDisponiveis;
 

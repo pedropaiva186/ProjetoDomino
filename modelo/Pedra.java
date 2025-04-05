@@ -17,5 +17,4 @@ public class Pedra {
     public int getNumBaixo() {
         return numeroBaixo;
     }
-
 }

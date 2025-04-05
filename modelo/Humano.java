@@ -5,6 +5,7 @@ import java.util.Scanner;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public class Humano extends Jogador{
+    
     // Construtor com a passagem das pedras nele próprio
     public Humano(String nomeJog, ArrayList<Pedra> pedras) {
         super(nomeJog, pedras);
@@ -14,7 +15,7 @@ public class Humano extends Jogador{
     public Humano(String nomeJog) {
         super(nomeJog);
     }
-    
+
     // Esta função serve para dar ao jogador a liberdade de escolher uma pedra e retorná-la
     public Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas{
         // De alguma forma o jogador vai escolher o index da pedra que vamos retornar

@@ -2,11 +2,12 @@ package modelo;
 import java.util.*;
 
 public class Tabuleiro {
-    private char[] pontas = new char[2];
+
+    private int[] pontas = new int[2];
     private List<Pedra> dorme = new ArrayList<>();
     private List<Pedra> pedrasEsquerda = new ArrayList<>();
     private List<Pedra> pedrasDireita = new ArrayList<>();
-    private Humano[] jogadores = new Humano[4];
+    private Jogador[] jogadores = new Jogador[4];
 
     public Tabuleiro(){
         setDorme();
@@ -15,15 +16,15 @@ public class Tabuleiro {
     // Método responsável pela criação das pedras do dorme. Caso a operação seja realizada com sucesso, retorna true; caso contrário, retorna false.
     public boolean setDorme() {
         
-    if(dorme.size() == 0){
-        for(char cima = 0; cima <= 6; cima++) {
-            for(char baixo = 0; baixo <= 6; baixo++) {
-                if(cima >= baixo) {
-                    dorme.add(new Pedra(cima, baixo));
+        if(dorme.size() == 0){
+            for(char cima = 0; cima <= 6; cima++) {
+                for(char baixo = 0; baixo <= 6; baixo++) {
+                    if(cima >= baixo) {
+                        dorme.add(new Pedra(cima, baixo));
                     }
                 }
             }
-        } else {
+        }else{
             return false;
         }
 
@@ -40,7 +41,7 @@ public class Tabuleiro {
         int finalDireita = pedrasDireita.size() - 1;
         int finalEsquerda = pedrasEsquerda.size() - 1;
 
-        pontas[0] = (char) pedrasDireita.get(finalDireita).getNumCima();
-        pontas[1] = (char) pedrasEsquerda.get(finalEsquerda).getNumBaixo();
+        pontas[0] = pedrasDireita.get(finalDireita).getNumCima();
+        pontas[1] = pedrasEsquerda.get(finalEsquerda).getNumBaixo();
     }
 }
