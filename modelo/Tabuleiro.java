@@ -7,8 +7,7 @@ public class Tabuleiro {
 
     private int[] pontas = new int[2];
     private List<Pedra> dorme = new ArrayList<>();
-    private List<Pedra> pedrasEsquerda = new ArrayList<>();
-    private List<Pedra> pedrasDireita = new ArrayList<>();
+    private LinkedList<Pedra> pedrasTabuleiro = new LinkedList<>();
     private Jogador[] jogadores = new Jogador[4];
 
     public Tabuleiro(String nome){
@@ -69,21 +68,18 @@ public class Tabuleiro {
         if(player.checkPossivel(jogada, pontas[0]) && player.checkPossivel(jogada, pontas[1])) {
             // Depois implementar a decisão da esquerda ou direita;
         } else if(player.checkPossivel(jogada, pontas[0])) {
-            pedrasEsquerda.add(jogada);
+            pedrasTabuleiro.addFirst(jogada);
             player.getPedras().remove(jogada);
         } else {
-            pedrasDireita.add(jogada);
+            pedrasTabuleiro.addLast(jogada);
             player.getPedras().remove(jogada);
         }
     }
 
     // Método responsável por colocar o valor das pontas do tabuleiro.
     public void setPontas(){
-        int finalDireita = pedrasDireita.size() - 1;
-        int finalEsquerda = pedrasEsquerda.size() - 1;
-
-        pontas[0] = pedrasDireita.get(finalDireita).getNumCima();
-        pontas[1] = pedrasEsquerda.get(finalEsquerda).getNumBaixo();
+        pontas[0] = pedrasTabuleiro.getFirst().getNumBaixo();
+        pontas[1] = pedrasTabuleiro.getLast().getNumCima();
     }
 
     // Método responsável por retornar o array formado pelas pontas do tabuleiro.
