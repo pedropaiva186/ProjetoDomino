@@ -1,6 +1,8 @@
 package modelo;
 import java.util.*;
 
+import modelo.Pedra;
+
 public class Tabuleiro {
 
     private int[] pontas = new int[2];
@@ -58,6 +60,21 @@ public class Tabuleiro {
             System.out.println("Índice inválido");
         }
         return retorno;
+    }
+    
+    // Método responsável por colocar as pedras na mesa e remover do baralho do player.
+    public void addTabuleiro(Jogador player) {
+        Pedra jogada = player.jogar(pontas[0], pontas[1]);
+
+        if(player.checkPossivel(jogada, pontas[0]) && player.checkPossivel(jogada, pontas[1])) {
+            // Depois implementar a decisão da esquerda ou direita;
+        } else if(player.checkPossivel(jogada, pontas[0])) {
+            pedrasEsquerda.add(jogada);
+            player.getPedras().remove(jogada);
+        } else {
+            pedrasDireita.add(jogada);
+            player.getPedras().remove(jogada);
+        }
     }
 
     // Método responsável por colocar o valor das pontas do tabuleiro.

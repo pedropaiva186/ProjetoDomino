@@ -66,10 +66,11 @@ public abstract class Jogador {
 
 
     // Serve para verificar se determinada pedra pode ser jogada dependendo das cabeças disponíveis no tabuleiro
-    private boolean verificaPedraPossiveisParaJogar(Pedra pedra, int cabeca1, int cabeca2) {
+    public boolean checkPossivel(Pedra pedra, int cabeca1) {
         // Depois é bom alterar isso para deixar mais legível e otimizado, mas a princípio vai funcionar
-        return pedra.getNumCima() == cabeca1 || pedra.getNumCima() == cabeca2 || pedra.getNumBaixo() == cabeca1 || pedra.getNumBaixo() == cabeca2;
+        return pedra.getNumCima() == cabeca1 ||pedra.getNumBaixo() == cabeca1;
     }
+    
 
     // Retorna um array com o index de cada pedra que pode ser jogada
     protected int[] verificaPedrasDisponiveis(int cabeca1, int cabeca2) {
@@ -77,7 +78,7 @@ public abstract class Jogador {
         int[] pedrasDispo = new int[6];
 
         for(Pedra ped : pedrasDisponiveis) {
-            if(verificaPedraPossiveisParaJogar(ped, cabeca1, cabeca2)) {
+            if(checkPossivel(ped, cabeca1) || checkPossivel(ped, cabeca2)) {
                 pedrasDispo[aux] = indexPedra;
                 aux++;
             }
