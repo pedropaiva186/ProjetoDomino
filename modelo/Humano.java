@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
@@ -22,7 +22,7 @@ public class Humano extends Jogador{
         // A princípio farei com scanner, mas provalvemente, isso vai mudar
         int index = 0;
         boolean indexValido = false;
-        int[] pedrasPossiveis;
+        List<Integer> pedrasPossiveis;
 
         pedrasPossiveis = verificaPedrasDisponiveis(cabeca1, cabeca2);
 
@@ -43,7 +43,7 @@ public class Humano extends Jogador{
                 index = leitor.nextInt();
                 // Verifica se ela está entre as disponíveis
                 for(int i : pedrasPossiveis) {
-                    if(index == i) {
+                    if((Integer) index == i) {
                         indexValido = true;
                         break;
                     }
@@ -60,6 +60,9 @@ public class Humano extends Jogador{
         } catch (Exception e) {
             return null;
         }
+
+        // Debug
+        System.out.println("Pedra retornada com sucesso!");
 
         return getPedra(index);
     }

@@ -1,6 +1,6 @@
 package modelo;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
@@ -68,25 +68,24 @@ public abstract class Jogador {
     // Serve para verificar se determinada pedra pode ser jogada dependendo das cabeças disponíveis no tabuleiro
     public boolean checkPossivel(Pedra pedra, int cabeca1) {
         // Depois é bom alterar isso para deixar mais legível e otimizado, mas a princípio vai funcionar
-        return pedra.getNumCima() == cabeca1 ||pedra.getNumBaixo() == cabeca1;
+        return pedra.getNumCima() == cabeca1 || pedra.getNumBaixo() == cabeca1;
     }
     
 
     // Retorna um array com o index de cada pedra que pode ser jogada
-    protected int[] verificaPedrasDisponiveis(int cabeca1, int cabeca2) {
-        int aux = 0, indexPedra = 0; 
-        int[] pedrasDispo = new int[6];
+    protected List<Integer> verificaPedrasDisponiveis(int cabeca1, int cabeca2) {
+        int indexPedra = 0; 
+        List<Integer> pedrasDispo = new ArrayList<>();
 
         for(Pedra ped : pedrasDisponiveis) {
             if(checkPossivel(ped, cabeca1) || checkPossivel(ped, cabeca2)) {
-                pedrasDispo[aux] = indexPedra;
-                aux++;
+                pedrasDispo.add(indexPedra);
             }
             indexPedra++;
         }
 
         // Retorna null caso não haja pedras para o jogador jogar
-        if(aux == 0) {
+        if(pedrasDispo.size() == 0) {
             return null;
         }
 
