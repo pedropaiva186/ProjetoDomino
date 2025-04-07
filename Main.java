@@ -1,4 +1,5 @@
 import modelo.Tabuleiro;
+import modelo.Leitor;
 import modelo.Pedra;
 import java.util.*;
 
@@ -9,6 +10,7 @@ public class Main{
         tabuleiro1.iniciarPartida();
         tabuleiro1.addTabuleiro(tabuleiro1.getPlayer(0));
         List<Pedra> mesa = tabuleiro1.getPedrasTabuleiro();
-        System.out.printf("%d %d", mesa.get(1).getNumBaixo(), mesa.get(0).getNumBaixo());
+        System.out.printf("%d %d", mesa.get(1).getNumBaixo(), mesa.get(1).getNumBaixo());
+        Leitor.leitor.close();
     }
 }

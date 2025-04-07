@@ -92,7 +92,8 @@ public class Tabuleiro {
     // Método responsável por colocar as pedras na mesa e remover do baralho do player.
     public void addTabuleiro(Jogador player) {
         Pedra jogada = player.jogar(pontas[0], pontas[1]);
-
+        int escolha;
+        boolean direction; // false = esquerda; true = direita
         //Debug
         System.out.printf("%d %d %d %d\n", jogada.getNumCima(), jogada.getNumBaixo(), pontas[0], pontas[1]);
         
@@ -101,20 +102,36 @@ public class Tabuleiro {
 
         if(player.checkPossivel(jogada, pontas[0]) && player.checkPossivel(jogada, pontas[1])) {
             // Depois implementar a decisão da esquerda ou direita - Essa implementação abaixo é temporária para realizar debug;
-            pedrasTabuleiro.addFirst(jogada);
-            System.out.println("Adicionado! - 3");
-            player.getPedras().remove(jogada);
+            while(true) {
+                System.out.println("Digite em qual lado você quer jogar!\n0 para esquerda - 1 para direita");
+                escolha = Leitor.leitor.nextInt();
+                if(escolha == 1) {
+                    direction = true;
+                    break;
+                } else if(escolha == 0) {
+                    direction = false;
+                    break;
+                }
+                System.out.println("Digite uma resposta válida!");
+            }
         } else if(player.checkPossivel(jogada, pontas[0])) {
-            pedrasTabuleiro.addFirst(jogada);
-            //Debug
-            System.out.println("Adicionado! - 1");
-            player.getPedras().remove(jogada);
+            direction = false;
         } else {
+            direction = true;
+        }
+        //direita
+        if(direction) {
             pedrasTabuleiro.addLast(jogada);
             //Debug
             System.out.println("Adicionado! - 2");
             player.getPedras().remove(jogada);
+        } else{ // esquerda
+            pedrasTabuleiro.addFirst(jogada);
+            //Debug
+            System.out.println("Adicionado! - 1");
+            player.getPedras().remove(jogada);
         }
+
         setPontas();
     }
 

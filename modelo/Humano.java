@@ -1,7 +1,6 @@
 package modelo;
 
 import java.util.*;
-import java.util.Scanner;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public class Humano extends Jogador{
@@ -32,7 +31,7 @@ public class Humano extends Jogador{
         }
 
         // Recebendo o index do usuário e tratando de forma que ele só pare quando receber um valor válido
-        try(Scanner leitor = new Scanner(System.in)) {
+        try{
             while(true) {
                 // Mostra quais as pedras disponíveis
                 System.out.print("Pedras disponíveis:\n");
@@ -40,10 +39,10 @@ public class Humano extends Jogador{
                     System.out.printf("%d\n", i);
                 }
                 System.out.print("Digite o index de uma pedra entre as disponíveis: ");
-                index = leitor.nextInt();
+                index = Leitor.leitor.nextInt();
                 // Verifica se ela está entre as disponíveis
                 for(int i : pedrasPossiveis) {
-                    if((Integer) index == i) {
+                    if(index == i) {
                         indexValido = true;
                         break;
                     }
@@ -56,7 +55,6 @@ public class Humano extends Jogador{
                 }
             }
 
-            leitor.close();
         } catch (Exception e) {
             return null;
         }
