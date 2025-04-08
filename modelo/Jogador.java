@@ -93,5 +93,14 @@ public abstract class Jogador {
     }
 
     // Esta função serve para dar ao jogador a liberdade de escolher uma pedra e retorná-la
+
+    public int somaPontos(){
+        int soma = 0;
+        for(Pedra pedra: pedrasDisponiveis){
+            soma += pedra.getNumBaixo() + pedra.getNumCima();
+        }
+        return soma;
+    }
+
     public abstract Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas;
 } 

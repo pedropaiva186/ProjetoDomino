@@ -75,7 +75,6 @@ public class Tabuleiro {
     // Método responsável por jogar a carraço de 6 na partida e, assim, começar as rodadas.
     public void iniciarPartida() {
         boolean achou = false;
-        int index = 0;
 
         for(int i = 0; i < 4; i++) {
             List<Pedra> pedras = jogadores[i].getPedras();
@@ -83,14 +82,13 @@ public class Tabuleiro {
             for(Pedra pedra: pedras) {
                 if(pedra.getNumCima() == 6 && pedra.getNumBaixo() == 6) {
                     achou = true;
-                    index = pedras.indexOf(pedra);
+                    pedrasTabuleiro.add(pedra);
+                    pedras.remove(pedra);
+                    turno = (i + 1)%4;
+                    break;
                 }
             }
-
             if(achou) {
-                pedrasTabuleiro.add(pedras.get(index));
-                pedras.remove(index);
-                turno = (i+1)%4;
                 break;
             }
         }
@@ -107,6 +105,12 @@ public class Tabuleiro {
         if(verificarFim() == 4) {
             // Será implementado depois.
             System.out.println("Fim da partida - Jogo trancado.");
+            int vencedor = contagemPontos();
+            if(vencedor == -1) {
+                System.out.println("Empate!");
+            } else {
+                System.out.printf("Fim da partida - Player %s venceu.\n", jogadores[vencedor].getNome());
+            }
             fim = true;
             return;
         } else if(verificarFim() < 4) {
@@ -218,6 +222,31 @@ public class Tabuleiro {
     // Método responsável por informar ao usuário de quem é o turno.
     public int getTurno(){
         return turno;
+    }
+
+    public int contagemPontos(){
+        int[] pontos = new int[4];
+        int maior = -1, index = 0, rep = 0;
+        
+
+        for(int i = 0; i < 4; i++){
+            pontos[i] = jogadores[i].somaPontos();
+            if(pontos[i] > maior) {
+                index = i;
+            }
+        }
+
+        for(int i = 0; i < 4; i++) {
+            if(pontos[i] == maior) {
+                rep++;
+            }
+        }
+
+        if(rep > 1) {
+            return -1;
+        }
+
+        return index;
     }
 
 }
