@@ -1,5 +1,5 @@
 package modelo;
 
-public interface Crud {
+public interface ICrud {
     
 } 

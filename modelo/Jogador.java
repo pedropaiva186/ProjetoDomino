@@ -1,7 +1,6 @@
 package modelo;
 
 import java.util.*;
-
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public abstract class Jogador {
@@ -85,7 +84,7 @@ public abstract class Jogador {
         }
 
         // Retorna null caso não haja pedras para o jogador jogar
-        if(pedrasDispo.size() == 0) {
+        if(pedrasDispo.isEmpty()) {
             return null;
         }
 

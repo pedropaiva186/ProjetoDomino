@@ -16,6 +16,7 @@ public class Humano extends Jogador{
     }
 
     // Esta função serve para dar ao jogador a liberdade de escolher uma pedra e retorná-la
+    @Override
     public Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas{
         // De alguma forma o jogador vai escolher o index da pedra que vamos retornar
         // A princípio farei com scanner, mas provalvemente, isso vai mudar

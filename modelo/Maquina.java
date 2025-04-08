@@ -1,7 +1,6 @@
 package modelo;
 
 import java.util.*;
-import java.util.Random;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public class Maquina extends Jogador{
@@ -15,6 +14,7 @@ public class Maquina extends Jogador{
     }
 
     // Esse método basicamente replica a forma como o método de jogar pedra funciona, porém, ele aleatoriza o index da pedra jogada
+    @Override
     public Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas{
         Random randomizer = new Random();
         List<Integer> pedrasDispo = super.verificaPedrasDisponiveis(cabeca1, cabeca2);
