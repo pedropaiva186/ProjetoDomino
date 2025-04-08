@@ -36,7 +36,7 @@ public class Humano extends Jogador{
                 // Mostra quais as pedras disponíveis
                 System.out.print("Pedras disponíveis:\n");
                 for(int i : pedrasPossiveis) {
-                    System.out.printf("%d\n", i);
+                    System.out.printf("%d - {%d %d}\n", i, pedrasDisponiveis.get(i).getNumCima(), pedrasDisponiveis.get(i).getNumBaixo());
                 }
                 System.out.print("Digite o index de uma pedra entre as disponíveis: ");
                 index = Leitor.leitor.nextInt();

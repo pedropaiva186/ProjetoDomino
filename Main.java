@@ -5,12 +5,25 @@ import java.util.*;
 
 public class Main{
     public static void main(String[] args){
-        Tabuleiro tabuleiro1 = new Tabuleiro("Kevin");
+        Tabuleiro jogo = new Tabuleiro("Kevin");
         
-        tabuleiro1.iniciarPartida();
-        tabuleiro1.addTabuleiro(tabuleiro1.getPlayer(0));
-        List<Pedra> mesa = tabuleiro1.getPedrasTabuleiro();
-        System.out.printf("%d %d", mesa.get(1).getNumBaixo(), mesa.get(1).getNumBaixo());
+        jogo.iniciarPartida();
+        while (true) {
+            List<Pedra> mesa = jogo.getPedrasTabuleiro();
+            System.out.println("---------------------------------------------------");
+            System.out.println("Pedras na mesa");
+            for(Pedra pedraAtual: mesa) {
+                System.out.printf("%d %d\n", pedraAtual.getNumCima(), pedraAtual.getNumBaixo());
+            }
+            System.out.println("---------------------------------------------------");
+
+            jogo.addTabuleiro(jogo.getPlayer(jogo.getTurno()));
+
+            if(jogo.getEstado() == true) {
+                break;
+            }
+        }
+
         Leitor.leitor.close();
     }
 }
