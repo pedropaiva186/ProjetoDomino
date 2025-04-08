@@ -74,7 +74,7 @@ public abstract class Jogador {
     protected List<Integer> verificaPedrasDisponiveis(int cabeca1, int cabeca2) {
         int indexPedra = 0; 
         List<Integer> pedrasDispo = new ArrayList<>();
-
+        
         for(Pedra ped : pedrasDisponiveis) {
             if(checkPossivel(ped, cabeca1) || checkPossivel(ped, cabeca2)) {
                 pedrasDispo.add(indexPedra);

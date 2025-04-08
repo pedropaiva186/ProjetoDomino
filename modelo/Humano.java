@@ -34,11 +34,13 @@ public class Humano extends Jogador{
         // Recebendo o index do usuário e tratando de forma que ele só pare quando receber um valor válido
         try{
             while(true) {
-                // Mostra quais as pedras disponíveis
+                // Mostra quais são as pedras que estão disponíveis no momento.
+                System.out.println("----------------------------------------------");
                 System.out.print("Pedras disponíveis:\n");
                 for(int i : pedrasPossiveis) {
                     System.out.printf("%d - {%d %d}\n", i, pedrasDisponiveis.get(i).getNumCima(), pedrasDisponiveis.get(i).getNumBaixo());
                 }
+                System.out.println("----------------------------------------------");
                 System.out.print("Digite o index de uma pedra entre as disponíveis: ");
                 index = Leitor.leitor.nextInt();
                 // Verifica se ela está entre as disponíveis
