@@ -22,5 +22,5 @@ Um projeto de dominó desenvolvido em Java utilizando conceitos de Programação
 - [Antônio Francelino de Pontes Neto](https://github.com/AntonioNeto4)  
 - [João Victor Oliveira](https://github.com/EuVictorOliveira)  
 - [Kevin Gabriel Morais Mangueira](https://github.com/Melvin2781)  
-- [Pedro Henrique Paiva Souza](https://github.com/PedroP4iv)
+- [Pedro Henrique Paiva Souza](https://github.com/pedropaiva186)
 

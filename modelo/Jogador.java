@@ -63,7 +63,6 @@ public abstract class Jogador {
         return retorno;
     }
 
-
     // Serve para verificar se determinada pedra pode ser jogada dependendo das cabeças disponíveis no tabuleiro
     public boolean checkPossivel(Pedra pedra, int cabeca1) {
         // Depois é bom alterar isso para deixar mais legível e otimizado, mas a princípio vai funcionar
