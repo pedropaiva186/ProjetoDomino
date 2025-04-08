@@ -28,7 +28,7 @@ public class Tabuleiro {
     }
 
     // Método responsável pela criação das pedras do dorme. Caso a operação seja realizada com sucesso, retorna true; caso contrário, retorna false.
-    public boolean setDorme() {
+    private boolean setDorme() {
         
         if(dorme.size() == 0){
             for(char cima = 0; cima <= 6; cima++) {
@@ -44,14 +44,14 @@ public class Tabuleiro {
 
         return true;
     }
-
+    
     //Método responsável por obter a lista de pedras do dorme.
     public List<Pedra> getDorme() {
         return dorme;
     }
 
     // Método responsável por preencher o deck de um player.
-    public void setBaralho(Jogador player) {
+    private void setBaralho(Jogador player) {
         Random randomizer = new Random();
         for(int i = 0; i <= 6; i++) {
             int index = randomizer.nextInt(dorme.size());
@@ -72,6 +72,45 @@ public class Tabuleiro {
         return retorno;
     }
     
+    // Método responsável por colocar o valor das pontas do tabuleiro.
+    public void setPontas(){
+        pontas[0] = pedrasTabuleiro.getFirst().getNumCima();
+        pontas[1] = pedrasTabuleiro.getLast().getNumBaixo();
+    }
+
+    // Método responsável por retornar o array formado pelas pontas do tabuleiro.
+    public int[] getPontas(){
+        return pontas;
+    }
+
+     // Método encarregado de obter o estado do jogo.
+     public boolean getEstado(){
+        return fim;
+    }
+
+    // Método responsável por informar ao usuário de quem é o turno.
+    public int getTurno(){
+        return turno;
+    }
+
+    // Método responsável por retornar as pedras que estão na mesa.
+    public List<Pedra> getPedrasTabuleiro(){
+        return pedrasTabuleiro;
+    }
+
+    // Método responsável por buscar a sena no baralho de um jogador.
+    private boolean acharSena(List<Pedra> pedras, int indexPlayer) {
+        for(Pedra pedra: pedras) {
+            if(pedra.getNumCima() == 6 && pedra.getNumBaixo() == 6) {
+                pedrasTabuleiro.add(pedra);
+                turno = (indexPlayer + 1)%4;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // Método responsável por jogar a carraço de 6 na partida e, assim, começar as rodadas.
     public void iniciarPartida() {
         boolean achou = false;
@@ -79,15 +118,8 @@ public class Tabuleiro {
         for(int i = 0; i < 4; i++) {
             List<Pedra> pedras = jogadores[i].getPedras();
 
-            for(Pedra pedra: pedras) {
-                if(pedra.getNumCima() == 6 && pedra.getNumBaixo() == 6) {
-                    achou = true;
-                    pedrasTabuleiro.add(pedra);
-                    pedras.remove(pedra);
-                    turno = (i + 1)%4;
-                    break;
-                }
-            }
+            achou = acharSena(pedras, i);
+
             if(achou) {
                 break;
             }
@@ -97,13 +129,51 @@ public class Tabuleiro {
         setPontas();
     }
 
-    // Método responsável por colocar as pedras na mesa e remover do baralho do player.
-    public void addTabuleiro(Jogador player) {
-        Pedra jogada;
-        int resultado = verificarFim();
+    // Método responsável por fazer a contagem de pontos dos jogadores.
+    private int contagemPontos(){
+        int[] pontos = new int[4];
+        int menor = 100, index = 0, repet = 0;
+        
+        for(int i = 0; i < 4; i++){
+            pontos[i] = jogadores[i].somaPontos();
+            if(pontos[i] < menor) {
+                index = i;
+            }
+        }
 
-        if(verificarFim() == 4) {
-            // Será implementado depois.
+        for(int i = 0; i < 4; i++) {
+            if(pontos[i] == menor) {
+                repet++;
+            }
+        }
+
+        if(repet > 1) {
+            return -1;
+        }
+
+        return index;
+    }
+
+    // Método responsável por verificar se a partida de dominó já acabou, retornando 4 se for para a contagem, 5 se não for o fim e i de 0 a 3 de acordo com o vitorioso.
+    private int verificarResultado(){
+        if(passes >= 4) {
+            return 4;
+        }
+
+        for(int i = 0; i < 4; i++) {
+            if(jogadores[i].getPedras().size() == 0) {
+                return i;
+            }
+        }
+
+        return 5;
+    } 
+
+    // Verifica se a partida chegou ao fim.
+    private boolean isFim(){
+        int resultado = verificarResultado();
+
+        if(resultado == 4) {
             System.out.println("Fim da partida - Jogo trancado.");
             int vencedor = contagemPontos();
             if(vencedor == -1) {
@@ -112,36 +182,29 @@ public class Tabuleiro {
                 System.out.printf("Fim da partida - Player %s venceu.\n", jogadores[vencedor].getNome());
             }
             fim = true;
-            return;
-        } else if(verificarFim() < 4) {
+        } else if(resultado < 4) {
             System.out.printf("Fim da partida - Player %s venceu.\n", jogadores[resultado].getNome());
             fim = true;
-            return;
         }
 
-        try{
-            jogada = player.jogar(pontas[0], pontas[1]);
-        } catch(NaoHaPedrasParaSeremJogadas e) {
-            System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno);
-            turno = (turno + 1)%4;
-            passes++;
-            return;
-        }
-        
-        int escolha;
-        boolean direction; // false = esquerda; true = direita
+        return fim;
+    }
 
-        if(player.checkPossivel(jogada, pontas[0]) && player.checkPossivel(jogada, pontas[1])) {
+    private void decidirJogada(Jogador jogadorAtual, Pedra escolha) {
+        int decisao;
+        boolean direction; // false = jogar à esquerda; true = jogar à direita
+
+        if(jogadorAtual.checkPossivel(escolha, pontas[0]) && jogadorAtual.checkPossivel(escolha, pontas[1])) {
             // Depois implementar a decisão da esquerda ou direita - Essa implementação abaixo é temporária para realizar debug;
             // Depois teremos que pensar em um jeito de aplicar isso para os bots.
             if(turno == 0) {
                 while(true) {
                     System.out.println("Digite em qual lado você quer jogar!\n0 para esquerda - 1 para direita");
-                    escolha = Leitor.leitor.nextInt();
-                    if(escolha == 1) {
+                    decisao = Leitor.leitor.nextInt();
+                    if(decisao == 1) {
                         direction = true;
                         break;
-                    } else if(escolha == 0) {
+                    } else if(decisao == 0) {
                         direction = false;
                         break;
                     }
@@ -156,97 +219,50 @@ public class Tabuleiro {
                     direction = false;
                 }
             }
-        } else if(player.checkPossivel(jogada, pontas[0])) {
+        } else if(jogadorAtual.checkPossivel(escolha, pontas[0])) {
             direction = false;
         } else {
             direction = true;
         }
         //direita
         if(direction) {
-            if(jogada.getNumCima() == pontas[1]) {
-                pedrasTabuleiro.addLast(jogada);
+            if(escolha.getNumCima() == pontas[1]) {
+                pedrasTabuleiro.addLast(escolha);
             } else {
-                pedrasTabuleiro.addLast(new Pedra(jogada.getNumBaixo(), jogada.getNumCima()));
+                pedrasTabuleiro.addLast(new Pedra(escolha.getNumBaixo(), escolha.getNumCima()));
             }
-            player.getPedras().remove(jogada);
         } else{
-            if(jogada.getNumBaixo() == pontas[0]) {
-                pedrasTabuleiro.addFirst(jogada);
+            if(escolha.getNumBaixo() == pontas[0]) {
+                pedrasTabuleiro.addFirst(escolha);
             } else {
-                pedrasTabuleiro.addFirst(new Pedra(jogada.getNumBaixo(), jogada.getNumCima()));
+                pedrasTabuleiro.addFirst(new Pedra(escolha.getNumBaixo(), escolha.getNumCima()));
             }
-            player.getPedras().remove(jogada);
         }
 
+        jogadorAtual.getPedras().remove(escolha);
+    }
+
+    // Método responsável por colocar as pedras na mesa e remover do baralho do player.
+    public void addTabuleiro(Jogador player) {
+        Pedra jogada;
+
+        if(isFim()){
+            return;
+        }
+
+        try{
+            jogada = player.jogar(pontas[0], pontas[1]);
+        } catch(NaoHaPedrasParaSeremJogadas e) {
+            System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno);
+            turno = (turno + 1)%4;
+            passes++;
+            return;
+        }
+
+        decidirJogada(player, jogada);
+        
         turno = (turno + 1)%4;
         passes = 0;
         setPontas();
     }
-
-    // Método responsável por colocar o valor das pontas do tabuleiro.
-    public void setPontas(){
-        pontas[0] = pedrasTabuleiro.getFirst().getNumCima();
-        pontas[1] = pedrasTabuleiro.getLast().getNumBaixo();
-    }
-
-    // Método responsável por retornar o array formado pelas pontas do tabuleiro.
-    public int[] getPontas(){
-        return pontas;
-    }
-
-    // Método responsável por retornar as pedras que estão na mesa.
-    public List<Pedra> getPedrasTabuleiro(){
-        return pedrasTabuleiro;
-    }
-
-    // Método responsável por verificar se a partida de dominó já acabou, retornando 4 se for para a contagem, 5 se não for o fim e i de 0 a 3 de acordo com o vitorioso.
-    public int verificarFim(){
-        if(passes >= 4) {
-            return 4;
-        }
-
-        for(int i = 0; i < 4; i++) {
-            if(jogadores[i].getPedras().size() == 0) {
-                return i;
-            }
-        }
-
-        return 5;
-    } 
-
-    // Método encarregado de obter o estado do jogo.
-    public boolean getEstado(){
-        return fim;
-    }
-
-    // Método responsável por informar ao usuário de quem é o turno.
-    public int getTurno(){
-        return turno;
-    }
-
-    public int contagemPontos(){
-        int[] pontos = new int[4];
-        int maior = -1, index = 0, rep = 0;
-        
-
-        for(int i = 0; i < 4; i++){
-            pontos[i] = jogadores[i].somaPontos();
-            if(pontos[i] > maior) {
-                index = i;
-            }
-        }
-
-        for(int i = 0; i < 4; i++) {
-            if(pontos[i] == maior) {
-                rep++;
-            }
-        }
-
-        if(rep > 1) {
-            return -1;
-        }
-
-        return index;
-    }
-
 }
