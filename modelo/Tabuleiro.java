@@ -8,6 +8,7 @@ public class Tabuleiro {
     private final List<Pedra> dorme = new ArrayList<>();
     private final LinkedList<Pedra> pedrasTabuleiro = new LinkedList<>();
     private final Jogador[] jogadores = new Jogador[4];
+    private final int qtdHumanos;
     private int passes = 0;
     private int turno;
     private int rodadas = 0;
@@ -15,10 +16,16 @@ public class Tabuleiro {
 
     public Tabuleiro(String[] nome, int qtdHumanos) {
         setDorme();
+        if(qtdHumanos > 4) {
+            System.out.println("Máximo de jogadores é 4.");
+            this.qtdHumanos = 4;
+        } else{
+            this.qtdHumanos = qtdHumanos;
+        }
 
         // Fiz essa pequena modificação para permitir que haja mais jogadores humanos
         for(int i = 0; i <= 3; i++) {
-            if(i < qtdHumanos) {
+            if(i < this.qtdHumanos) {
                 jogadores[i] = new Humano(nome[i]);
             } else {
                 jogadores[i] = new Maquina(String.format("bot %d", i));
@@ -207,10 +214,8 @@ public class Tabuleiro {
         while (true) { 
             System.out.println("Digite em qual lado você quer jogar!\n0 para esquerda - 1 para direita");
             decisao = Leitor.leitor.nextInt();
-            if(decisao == 1) {
-                return true;
-            } else if(decisao == 0) {
-                return false;
+            if(1 >= decisao && decisao >= 0) {
+                return decisao == 1;
             }
             System.out.println("Digite uma resposta válida!");
         }
@@ -221,7 +226,7 @@ public class Tabuleiro {
         boolean direction; // false = jogar à esquerda; true = jogar à direita
 
         if(jogadorAtual.checkPossivel(escolha, pontas[0]) && jogadorAtual.checkPossivel(escolha, pontas[1])) {
-            if(turno == 0) {
+            if(turno < qtdHumanos) {
                 direction = getDirection();
             }else {
                 Random randomizer2 = new Random();
@@ -263,8 +268,8 @@ public class Tabuleiro {
 
         rodadas++;
 
-        if(turno == 0) {
-            System.out.printf("Número de pedras do jogador: %d\n", jogadores[0].verificaNumPedras());
+        if(turno < qtdHumanos) {
+            System.out.printf("Número de pedras do jogador %s: %d\n", jogadores[turno].verificaNumPedras(), jogadores[turno].getNome());
         }
 
         try{
