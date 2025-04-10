@@ -16,8 +16,9 @@ public class Tabuleiro {
 
     public Tabuleiro(String[] nome, int qtdHumanos) {
         setDorme();
+        // Adicionei o atributo qtdHumanos para conseguir utilizar em métodos mais a frente. Além disso, coloquei uma limitação na variável qtdHumanos.
         if(qtdHumanos > 4) {
-            System.out.println("Máximo de jogadores é 4.");
+            System.out.println("O máximo de jogadores é 4.");
             this.qtdHumanos = 4;
         } else{
             this.qtdHumanos = qtdHumanos;
@@ -233,7 +234,7 @@ public class Tabuleiro {
                 int res = randomizer2.nextInt(1);
                 direction = res == 1;
             }
-        } else direction = !jogadorAtual.checkPossivel(escolha, pontas[0]);
+        } else direction = !jogadorAtual.checkPossivel(escolha, pontas[0]); // Só depende da negação da ponta[0], uma vez que nunca ocorre o caso em que os dois são falsos nessa função.
         //direita
         if(direction) {
             if(escolha.getNumCima() == pontas[1]) {
