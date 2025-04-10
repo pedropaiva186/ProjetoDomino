@@ -1,24 +1,27 @@
 package modelo;
 import java.util.*;
-
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 
 public class Tabuleiro {
-    private int[] pontas = new int[2];
-    private List<Pedra> dorme = new ArrayList<>();
-    private LinkedList<Pedra> pedrasTabuleiro = new LinkedList<>();
-    private Jogador[] jogadores = new Jogador[4];
+    private final int[] pontas = new int[2];
+    private final List<Pedra> dorme = new ArrayList<>();
+    private final LinkedList<Pedra> pedrasTabuleiro = new LinkedList<>();
+    private final Jogador[] jogadores = new Jogador[4];
     private int passes = 0;
     private int turno;
     private int rodadas = 0;
     private boolean fim = false;
 
-    public Tabuleiro(String nome) {
+    public Tabuleiro(String[] nome, int qtdHumanos) {
         setDorme();
 
-        jogadores[0] = new Humano(nome);
-        for(int i = 1; i <= 3; i++) {
-            jogadores[i] = new Maquina(String.format("bot %d", i));
+        // Fiz essa pequena modificação para permitir que haja mais jogadores humanos
+        for(int i = 0; i <= 3; i++) {
+            if(i < qtdHumanos) {
+                jogadores[i] = new Humano(nome[i]);
+            } else {
+                jogadores[i] = new Maquina(String.format("bot %d", i));
+            }
         }
 
         for(int i = 0; i < 4; i++) {
@@ -29,7 +32,7 @@ public class Tabuleiro {
     // Método responsável pela criação das pedras do dorme. Caso a operação seja realizada com sucesso, retorna true; caso contrário, retorna false.
     private boolean setDorme() {
         
-        if(dorme.size() == 0) {
+        if(dorme.isEmpty()) {
             for(char cima = 0; cima <= 6; cima++) {
                 for(char baixo = 0; baixo <= 6; baixo++) {
                     if(cima >= baixo) {
@@ -116,9 +119,9 @@ public class Tabuleiro {
     }
 
 
-    // Método responsável por jogar a carraço de 6 na partida e, assim, começar as rodadas.
+    // Método responsável por jogar a carroça de 6 na partida e, assim, começar as rodadas.
     public void iniciarPartida() {
-        boolean achou = false;
+        boolean achou;
 
         for(int i = 0; i < 4; i++) {
             List<Pedra> pedras = jogadores[i].getPedras();
@@ -167,7 +170,7 @@ public class Tabuleiro {
         }
 
         for(int i = 0; i < 4; i++) {
-            if(jogadores[i].getPedras().size() == 0) {
+            if(jogadores[i].getPedras().isEmpty()) {
                 return i;
             }
         }
@@ -196,53 +199,49 @@ public class Tabuleiro {
         return fim;
     }
 
+    // Método para recolher o lado no qual o player quer jogar a própria pedra
+    private boolean getDirection() {
+        int decisao;
+
+        while (true) { 
+            System.out.println("Digite em qual lado você quer jogar!\n0 para esquerda - 1 para direita");
+            decisao = Leitor.leitor.nextInt();
+            if(decisao == 1) {
+                return true;
+            } else if(decisao == 0) {
+                return false;
+            }
+            System.out.println("Digite uma resposta válida!");
+        }
+    }
+
     // Método utilizado para decidir onde a pedra será jogada.
     private void decidirJogada(Jogador jogadorAtual, Pedra escolha) {
-        int decisao;
         boolean direction; // false = jogar à esquerda; true = jogar à direita
 
         if(jogadorAtual.checkPossivel(escolha, pontas[0]) && jogadorAtual.checkPossivel(escolha, pontas[1])) {
             if(turno == 0) {
-                while(true) {
-                    System.out.println("Digite em qual lado você quer jogar!\n0 para esquerda - 1 para direita");
-                    decisao = Leitor.leitor.nextInt();
-                    if(decisao == 1) {
-                        direction = true;
-                        break;
-                    } else if(decisao == 0) {
-                        direction = false;
-                        break;
-                    }
-                    System.out.println("Digite uma resposta válida!");
-                }
-            } else {
+                direction = getDirection();
+            }else {
                 Random randomizer2 = new Random();
                 int res = randomizer2.nextInt(1);
-                if(res == 1) {
-                    direction = true;
-                } else {
-                    direction = false;
-                }
+                direction = res == 1;
             }
-        } else if(jogadorAtual.checkPossivel(escolha, pontas[0])) {
-            direction = false;
-        } else {
-            direction = true;
-        }
+        } else direction = !jogadorAtual.checkPossivel(escolha, pontas[0]);
         //direita
         if(direction) {
             if(escolha.getNumCima() == pontas[1]) {
                 pedrasTabuleiro.addLast(escolha);
                 System.out.printf("O jogador jogou a pedra %d %d na direita.\n", escolha.getNumCima(), escolha.getNumBaixo());
-            } else {
+            }else {
                 pedrasTabuleiro.addLast(new Pedra(escolha.getNumBaixo(), escolha.getNumCima()));
                 System.out.printf("O jogador jogou a pedra %d %d na direita.\n", escolha.getNumBaixo(), escolha.getNumCima());
             }
-        } else{
+        }else {
             if(escolha.getNumBaixo() == pontas[0]) {
                 pedrasTabuleiro.addFirst(escolha);
                 System.out.printf("O jogador jogou a pedra %d %d na esquerda.\n", escolha.getNumCima(), escolha.getNumBaixo());
-            } else {
+            }else {
                 pedrasTabuleiro.addFirst(new Pedra(escolha.getNumBaixo(), escolha.getNumCima()));
                 System.out.printf("O jogador jogou a pedra %d %d na esquerda.\n", escolha.getNumBaixo(), escolha.getNumCima());
             }

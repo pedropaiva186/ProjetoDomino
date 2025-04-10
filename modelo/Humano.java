@@ -35,13 +35,7 @@ public class Humano extends Jogador{
         try{
             while(true) {
                 // Mostra quais são as pedras que estão disponíveis no momento.
-                System.out.println("----------------------------------------------");
-                System.out.print("Pedras disponíveis:\n");
-                for(int i : pedrasPossiveis) {
-                    System.out.printf("%d - {%d %d}\n", i, pedrasDisponiveis.get(i).getNumCima(), pedrasDisponiveis.get(i).getNumBaixo());
-                }
-                System.out.println("----------------------------------------------");
-                System.out.print("Digite o index de uma pedra entre as disponíveis: ");
+                showPedrasDisponiveis(pedrasPossiveis);
                 index = Leitor.leitor.nextInt();
                 // Verifica se ela está entre as disponíveis
                 for(int i : pedrasPossiveis) {
@@ -66,5 +60,15 @@ public class Humano extends Jogador{
         System.out.println("Pedra retornada com sucesso!");
 
         return getPedra(index);
+    }
+
+    private void showPedrasDisponiveis(List<Integer> pedrasPossiveis) {
+        System.out.println("----------------------------------------------");
+        System.out.print("Pedras disponíveis:\n");
+        for(int i : pedrasPossiveis) {
+            System.out.printf("%d - {%d %d}\n", i, pedrasDisponiveis.get(i).getNumCima(), pedrasDisponiveis.get(i).getNumBaixo());
+        }
+        System.out.println("----------------------------------------------");
+        System.out.print("Digite o index de uma pedra entre as disponíveis: ");
     }
 }
