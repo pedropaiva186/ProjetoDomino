@@ -1,6 +1,7 @@
 package modelo;
 import java.util.*;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
+import modelo.erros_adicionais.PararAgora;
 
 public class Tabuleiro {
     private final int[] pontas = new int[2];
@@ -251,7 +252,7 @@ public class Tabuleiro {
     }
 
     // Método responsável por colocar as pedras na mesa e remover do baralho do player.
-    public void addTabuleiro(Jogador player) {
+    public void addTabuleiro(Jogador player) throws PararAgora{
         Pedra jogada;
 
         System.out.printf("Turno de %s\n", jogadores[turno].getNome());
@@ -268,6 +269,10 @@ public class Tabuleiro {
 
         try{
             jogada = player.jogar(pontas[0], pontas[1]);
+
+            // Se caso o player quiser parar o jogo, esse erro vai subir até encerrar seu funcionamento
+        } catch(PararAgora e) {
+            throw e;
         } catch(NaoHaPedrasParaSeremJogadas e) {
             System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno);
             turno = (turno + 1)%4;

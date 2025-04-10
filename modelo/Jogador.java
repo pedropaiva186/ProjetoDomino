@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.*;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
+import modelo.erros_adicionais.PararAgora;
 
 public abstract class Jogador {
     
@@ -99,5 +100,5 @@ public abstract class Jogador {
         return soma;
     }
 
-    public abstract Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas;
+    public abstract Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas, PararAgora;
 } 

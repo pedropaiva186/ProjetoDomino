@@ -3,6 +3,7 @@ import java.util.concurrent.TimeUnit;
 import modelo.Leitor;
 import modelo.Pedra;
 import modelo.Tabuleiro;
+import modelo.erros_adicionais.PararAgora;
 
 public class Main{
     public static void main(String[] args) throws InterruptedException{
@@ -28,7 +29,11 @@ public class Main{
                 }
                 System.out.println("-----------------------------------------------------------");
                 
-                jogo.addTabuleiro(jogo.getPlayer(jogo.getTurno()));
+                try {
+                    jogo.addTabuleiro(jogo.getPlayer(jogo.getTurno()));
+                } catch (PararAgora e) {
+                    break;
+                }
                 
                 if(jogo.getEstado() == true) {
                     break;
