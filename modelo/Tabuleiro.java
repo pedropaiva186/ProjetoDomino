@@ -280,7 +280,7 @@ public class Tabuleiro {
         } catch(PararAgora e) {
             throw e;
         } catch(NaoHaPedrasParaSeremJogadas e) {
-            System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno);
+            System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno+1); // somei 1 pois o código estava retornando coisas como "Jogador 0 não tem pedras para jogar"
             turno = (turno + 1)%4;
             passes++;
             return;

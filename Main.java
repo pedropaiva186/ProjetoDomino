@@ -8,10 +8,25 @@ import modelo.erros_adicionais.PararAgora;
 public class Main{
     public static void main(String[] args) throws InterruptedException{
         try (Leitor.leitor) {
-            // Aqui inserimos os nomes dos jogadores, essa alteração vai permitir uma quantidade alterável de
-            // jogadores
-            String[] nomes = {"Kevin", "Pedro"};
-            Tabuleiro jogo = new Tabuleiro(nomes, 2);
+             
+
+            /*Permite que o usuário informe a quantidade de jogadores(limitado a no máximo 4).
+             * Optei por essa alteração por acreditar que torna o programa mais user friendly
+             */
+            System.out.print("Informe a quantidade de jogadores: ");
+            int qtdJogadores = Leitor.leitor.nextInt();
+            Leitor.leitor.nextLine(); //limpa buffer;
+            String[] nomes = new String[qtdJogadores];
+
+
+            /*Laço para que o nome dos jogadores seja informado pelo usuário. 
+              Cada nome é alocado numa posição do array nomes de maneira sequencail*/
+            for(int i = 0; i < qtdJogadores; i++){
+                System.out.printf("Informe o nome do jogador n° %d: ", i+1);
+                nomes[i] = Leitor.leitor.nextLine();
+            }
+
+            Tabuleiro jogo = new Tabuleiro(nomes, qtdJogadores);
             
             jogo.iniciarPartida();
             while(true) {
