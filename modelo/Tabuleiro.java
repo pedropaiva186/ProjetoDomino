@@ -16,13 +16,8 @@ public class Tabuleiro {
 
     public Tabuleiro(String[] nome, int qtdHumanos) {
         setDorme();
-        // Adicionei o atributo qtdHumanos para conseguir utilizar em métodos mais a frente. Além disso, coloquei uma limitação na variável qtdHumanos.
-        if(qtdHumanos > 4) {
-            System.out.println("O máximo de jogadores é 4.");
-            this.qtdHumanos = 4;
-        } else{
-            this.qtdHumanos = qtdHumanos;
-        }
+        // Adicionei o atributo qtdHumanos para conseguir utilizar em métodos mais a frente.
+        this.qtdHumanos = qtdHumanos;
 
         // Fiz essa pequena modificação para permitir que haja mais jogadores humanos
         for(int i = 0; i <= 3; i++) {
@@ -280,7 +275,7 @@ public class Tabuleiro {
         } catch(PararAgora e) {
             throw e;
         } catch(NaoHaPedrasParaSeremJogadas e) {
-            System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno);
+            System.out.printf("Jogador %d não possui pedras para jogar.\nPassando o turno para o próximo jogador.\n", turno+1); // somei 1 pois o código estava retornando coisas como "Jogador 0 não tem pedras para jogar"
             turno = (turno + 1)%4;
             passes++;
             return;
