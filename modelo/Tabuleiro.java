@@ -29,7 +29,7 @@ public class Tabuleiro {
             if(i < this.qtdHumanos) {
                 jogadores[i] = new Humano(nome[i]);
             } else {
-                jogadores[i] = new Maquina(String.format("bot %d", i));
+                jogadores[i] = new Maquina(String.format("bot %d", i+1-qtdHumanos));
             }
         }
 
