@@ -7,17 +7,24 @@ import modelo.erros_adicionais.PararAgora;
 
 public class Main{
     public static void main(String[] args) throws InterruptedException{
+        int qtdJogadores;
         try (Leitor.leitor) {
              
 
             /*Permite que o usuário informe a quantidade de jogadores(limitado a no máximo 4).
              * Optei por essa alteração por acreditar que torna o programa mais user friendly
              */
-            System.out.print("Informe a quantidade de jogadores: ");
-            int qtdJogadores = Leitor.leitor.nextInt();
-            Leitor.leitor.nextLine(); //limpa buffer;
-            String[] nomes = new String[qtdJogadores];
+            while(true) {
+                System.out.print("Informe a quantidade de jogadores: ");
+                qtdJogadores = Leitor.leitor.nextInt();
+                if(qtdJogadores <= 4) {
+                    break;
+                }
+                System.out.println("Quantidade de jogadores humanos inválida, o limite de jogadores humanos é de 0-4.");
+            }
 
+            String[] nomes = new String[qtdJogadores];
+            Leitor.leitor.nextLine(); //limpa buffer;
 
             /*Laço para que o nome dos jogadores seja informado pelo usuário. 
               Cada nome é alocado numa posição do array nomes de maneira sequencail*/
