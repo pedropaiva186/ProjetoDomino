@@ -270,7 +270,7 @@ public class Tabuleiro {
         rodadas++;
 
         if(turno < qtdHumanos) {
-            System.out.printf("Número de pedras do jogador %s: %d\n", jogadores[turno].verificaNumPedras(), jogadores[turno].getNome());
+            System.out.printf("Número de pedras do jogador %s: %d\n",  jogadores[turno].getNome(), jogadores[turno].verificaNumPedras());
         }
 
         try{
