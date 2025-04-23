@@ -256,7 +256,7 @@ public class Tabuleiro {
     public void addTabuleiro(Jogador player) throws PararAgora{
         Pedra jogada;
 
-        System.out.printf("Turno de %s\n", jogadores[turno].getNome());
+        System.out.printf("Turno do jogador %s\n", jogadores[turno].getNome());
 
         if(isFim()){
             return;
@@ -265,7 +265,12 @@ public class Tabuleiro {
         rodadas++;
 
         if(turno < qtdHumanos) {
-            System.out.printf("Número de pedras do jogador %s: %d\n",  jogadores[turno].getNome(), jogadores[turno].verificaNumPedras());
+            System.out.printf("  Pedras do jogador:\n",  jogadores[turno].getNome());
+            for(int i = 0; i < jogadores[turno].verificaNumPedras(); i++) {
+                Pedra pedraI = jogadores[turno].getPedras().get(i);
+                System.out.printf("  {%d %d}", pedraI.getNumCima(), pedraI.getNumBaixo());
+            }
+            System.out.println("");
         }
 
         try{

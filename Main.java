@@ -1,9 +1,8 @@
-import java.util.*;
 import java.util.concurrent.TimeUnit;
 import modelo.Leitor;
-import modelo.Pedra;
 import modelo.Tabuleiro;
 import modelo.erros_adicionais.PararAgora;
+import view.TabuleiroView;
 
 public class Main{
     public static void main(String[] args) throws InterruptedException{
@@ -27,7 +26,7 @@ public class Main{
             Leitor.leitor.nextLine(); //limpa buffer;
 
             /*Laço para que o nome dos jogadores seja informado pelo usuário. 
-              Cada nome é alocado numa posição do array nomes de maneira sequencail*/
+              Cada nome é alocado numa posição do array nomes de maneira sequencial*/
             for(int i = 0; i < qtdJogadores; i++){
                 System.out.printf("Informe o nome do jogador n° %d: ", i+1);
                 nomes[i] = Leitor.leitor.nextLine();
@@ -43,13 +42,7 @@ public class Main{
                     throw e;
                 }
 
-                List<Pedra> mesa = jogo.getPedrasTabuleiro();
-                System.out.printf("-------------------------%d° rodada-------------------------\n", jogo.getRodadas());
-                System.out.println("Pedras na mesa");
-                for(Pedra pedraAtual: mesa) {
-                    System.out.printf("{%d %d}\n", pedraAtual.getNumCima(), pedraAtual.getNumBaixo());
-                }
-                System.out.println("-----------------------------------------------------------");
+                TabuleiroView.listarPedrasTabuleiro(jogo);
                 
                 try {
                     jogo.addTabuleiro(jogo.getPlayer(jogo.getTurno()));

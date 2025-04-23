@@ -64,9 +64,6 @@ public class Humano extends Jogador{
             return null;
         }
 
-        // Debug
-        System.out.println("Pedra retornada com sucesso!");
-
         return getPedra(index);
     }
 
