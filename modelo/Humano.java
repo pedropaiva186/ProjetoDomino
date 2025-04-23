@@ -55,7 +55,7 @@ public class Humano extends Jogador{
                 if(indexValido) {
                     break;
                 } else {
-                    System.out.println("Número incorreto, tente novamente!!!");
+                    System.out.println("Índice inválido, tente novamente!!!");
                 }
             }
         } catch(PararAgora e) {
