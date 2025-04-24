@@ -59,7 +59,7 @@ public class Tabuleiro {
     // Método responsável por preencher o deck de um player.
     private void setBaralho(Jogador player) {
         Random randomizer = new Random();
-        for(int i = 0; i <= 6; i++) {
+        for(int i = 0; i < 6; i++) {
             int index = randomizer.nextInt(dorme.size());
 
             player.addPedra(dorme.get(index));
@@ -106,9 +106,9 @@ public class Tabuleiro {
     }
 
     // Método responsável por buscar a sena no baralho de um jogador.
-    private boolean acharSena(List<Pedra> pedras, int indexPlayer) {
+    private boolean acharCarroca(int cabeca, List<Pedra> pedras, int indexPlayer) {
         for(Pedra pedra: pedras) {
-            if(pedra.getNumCima() == 6 && pedra.getNumBaixo() == 6) {
+            if(pedra.getNumCima() == cabeca && pedra.getNumBaixo() == cabeca) {
                 pedrasTabuleiro.add(pedra);
                 pedras.remove(pedra);
                 
@@ -124,18 +124,22 @@ public class Tabuleiro {
 
     // Método responsável por jogar a carroça de 6 na partida e, assim, começar as rodadas.
     public void iniciarPartida() {
-        boolean achou;
+        boolean achou = false;
 
-        for(int i = 0; i < 4; i++) {
-            List<Pedra> pedras = jogadores[i].getPedras();
+        for(int i = 6; i > 1; i--) {
+            for(int j = 0; j < 4; j++) {
+                List<Pedra> pedras = jogadores[j].getPedras();
 
-            achou = acharSena(pedras, i);
-
-            if(achou) {
+                achou = acharCarroca(i, pedras, j);
+                
+                if(achou) {
+                    break;
+                }
+            }
+            if(achou){
                 break;
             }
         }
-
         passes = 0;
         rodadas++;
         setPontas();
