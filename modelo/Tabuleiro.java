@@ -11,7 +11,7 @@ public class Tabuleiro {
     private final int qtdHumanos;
     private int passes = 0;
     private int turno;
-    private int rodadas = 0;
+    private int rodadas = 1;
     private boolean fim = false;
 
     public Tabuleiro(String[] nome, int qtdHumanos) {
@@ -94,9 +94,6 @@ public class Tabuleiro {
     }
 
     // Método encarregado de obter o estado do jogo.
-    public boolean getEstado(){
-        return fim;
-    }
 
     // Método responsável por informar ao usuário de quem é o turno.
     public int getTurno(){
@@ -115,6 +112,8 @@ public class Tabuleiro {
                 pedrasTabuleiro.add(pedra);
                 pedras.remove(pedra);
                 
+                System.out.printf("Jogador %s começou a partida.\n", jogadores[indexPlayer].getNome());
+
                 turno = (indexPlayer + 1)%4;
                 return true;
             }
@@ -183,7 +182,7 @@ public class Tabuleiro {
     } 
 
     // Verifica se a partida chegou ao fim.
-    private boolean isFim(){
+    public boolean isFim(){
         int resultado = verificarResultado();
 
         if(resultado == 4) {

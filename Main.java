@@ -5,6 +5,11 @@ import modelo.erros_adicionais.PararAgora;
 import view.TabuleiroView;
 
 public class Main{
+    public static void limparTerminal() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     public static void main(String[] args) throws InterruptedException{
         int qtdJogadores;
         try (Leitor.leitor) {
@@ -41,7 +46,7 @@ public class Main{
                 } catch(InterruptedException e) {
                     throw e;
                 }
-
+                limparTerminal();
                 TabuleiroView.listarPedrasTabuleiro(jogo);
                 
                 try {
@@ -49,11 +54,13 @@ public class Main{
                 } catch (PararAgora e) {
                     break;
                 }
-                
-                if(jogo.getEstado() == true) {
+
+                if(jogo.isFim()) {
                     break;
                 }
             }
+
+            System.out.println("Fim do programa, espero que você tenha se divertido!");
         }
     }
 }

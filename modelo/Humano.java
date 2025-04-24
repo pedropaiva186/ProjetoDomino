@@ -3,6 +3,7 @@ package modelo;
 import java.util.*;
 import modelo.erros_adicionais.NaoHaPedrasParaSeremJogadas;
 import modelo.erros_adicionais.PararAgora;
+import view.TabuleiroView;
 
 public class Humano extends Jogador{
     
@@ -18,14 +19,14 @@ public class Humano extends Jogador{
 
     // Esta função serve para dar ao jogador a liberdade de escolher uma pedra e retorná-la
     @Override
-    public Pedra jogar(int cabeca1, int cabeca2) throws NaoHaPedrasParaSeremJogadas, PararAgora{
+    public Pedra jogar(int ponta1, int ponta2) throws NaoHaPedrasParaSeremJogadas, PararAgora{
         // De alguma forma o jogador vai escolher o index da pedra que vamos retornar
         // A princípio farei com scanner, mas provalvemente, isso vai mudar
         int index = 0;
         boolean indexValido = false;
         List<Integer> pedrasPossiveis;
 
-        pedrasPossiveis = verificaPedrasDisponiveis(cabeca1, cabeca2);
+        pedrasPossiveis = verificaPedrasDisponiveis(ponta1, ponta2);
 
         // Verifica se não há pedras disponíveis, então encerra o método e retorna um erro indicando que a vez deve ser pulada
         if(pedrasPossiveis == null) {
@@ -36,7 +37,7 @@ public class Humano extends Jogador{
         try{
             while(true) {
                 // Mostra quais são as pedras que estão disponíveis no momento
-                showPedrasDisponiveis(pedrasPossiveis);
+                TabuleiroView.showPedrasDisponiveis(ponta1, ponta2, this);
                 index = Leitor.leitor.nextInt();
 
                 // Se caso o player quiser parar o jogo instantâneamente
@@ -67,13 +68,4 @@ public class Humano extends Jogador{
         return getPedra(index);
     }
 
-    private void showPedrasDisponiveis(List<Integer> pedrasPossiveis) {
-        System.out.println("----------------------------------------------");
-        System.out.print("Pedras disponíveis:\n");
-        for(int i : pedrasPossiveis) {
-            System.out.printf("%d - {%d %d}\n", i, pedrasDisponiveis.get(i).getNumCima(), pedrasDisponiveis.get(i).getNumBaixo());
-        }
-        System.out.println("----------------------------------------------");
-        System.out.print("Digite o index de uma pedra entre as disponíveis ou digite '99' para encerrar: ");
-    }
 }

@@ -7,17 +7,17 @@ import modelo.erros_adicionais.PararAgora;
 public abstract class Jogador {
     
     protected final String nomeJog;
-    protected final ArrayList<Pedra> pedrasDisponiveis;
+    protected final ArrayList<Pedra> pedrasDeck;
 
     public Jogador(String nomeJog, ArrayList<Pedra> pedras) {
         this.nomeJog = nomeJog;
-        pedrasDisponiveis = pedras;
+        pedrasDeck = pedras;
     }
 
     // Construtor no qual é necessário adicionar as pedras depois
     public Jogador(String nomeJog) {
         this.nomeJog = nomeJog;
-        pedrasDisponiveis = new ArrayList<>();
+        pedrasDeck = new ArrayList<>();
     }
 
     public String getNome() {
@@ -25,13 +25,13 @@ public abstract class Jogador {
     }
 
     public void addPedra(Pedra pedra) {
-        pedrasDisponiveis.add(pedra);
+        pedrasDeck.add(pedra);
     }
 
     // Tenta retirar a pedra, mas caso haja um erro, ele lança o erro
     public void retiraPedra(int index) throws IndexOutOfBoundsException{
         try {
-            pedrasDisponiveis.remove(index);
+            pedrasDeck.remove(index);
         } catch (IndexOutOfBoundsException e) {
             throw new IndexOutOfBoundsException();
         }
@@ -39,16 +39,16 @@ public abstract class Jogador {
 
     // Método para retirar a pedra a partir dela mesma, e não pelo index
     public void retiraPedra(Pedra ped) {
-        pedrasDisponiveis.remove(ped);
+        pedrasDeck.remove(ped);
     }
 
     // retorna o número de pedras
     public int verificaNumPedras() {
-        return pedrasDisponiveis.size();
+        return pedrasDeck.size();
     }
     // retorna o array de pedras.
     public ArrayList<Pedra> getPedras() {
-        return pedrasDisponiveis;
+        return pedrasDeck;
     }
 
     // Faz a mesma verificação para retornar um elementro Pedra
@@ -56,7 +56,7 @@ public abstract class Jogador {
         Pedra retorno;
 
         try {
-            retorno = pedrasDisponiveis.get(index);
+            retorno = pedrasDeck.get(index);
         } catch (IndexOutOfBoundsException e) {
             throw new IndexOutOfBoundsException();
         }
@@ -71,11 +71,11 @@ public abstract class Jogador {
     
 
     // Retorna um array com o index de cada pedra que pode ser jogada
-    protected List<Integer> verificaPedrasDisponiveis(int cabeca1, int cabeca2) {
+    public List<Integer> verificaPedrasDisponiveis(int cabeca1, int cabeca2) {
         int indexPedra = 0; 
         List<Integer> pedrasDispo = new ArrayList<>();
         
-        for(Pedra ped : pedrasDisponiveis) {
+        for(Pedra ped : pedrasDeck) {
             if(checkPossivel(ped, cabeca1) || checkPossivel(ped, cabeca2)) {
                 pedrasDispo.add(indexPedra);
             }
@@ -94,7 +94,7 @@ public abstract class Jogador {
 
     public int somaPontos(){
         int soma = 0;
-        for(Pedra pedra: pedrasDisponiveis){
+        for(Pedra pedra: pedrasDeck){
             soma += pedra.getNumBaixo() + pedra.getNumCima();
         }
         return soma;

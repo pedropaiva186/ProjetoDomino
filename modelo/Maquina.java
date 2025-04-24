@@ -29,6 +29,6 @@ public class Maquina extends Jogador{
         index = pedrasDispo.get(randomizer.nextInt(pedrasDispo.size()));
 
         // Retornando a pedra que será jogada
-        return pedrasDisponiveis.get(index);
+        return pedrasDeck.get(index);
     }
 }
