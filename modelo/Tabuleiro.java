@@ -114,7 +114,7 @@ public class Tabuleiro {
             if(pedra.getNumCima() == cabeca && pedra.getNumBaixo() == cabeca) {
                 pedrasTabuleiro.add(pedra);
                 pedras.remove(pedra);
-                
+                System.out.printf("Jogador %s iniciou a partida\n", jogadores[indexPlayer].getNome());
                 turno = (indexPlayer + 1)%4;
                 return true;
             }
@@ -125,17 +125,20 @@ public class Tabuleiro {
 
     // Método responsável por jogar a carroça de 6 na partida e, assim, começar as rodadas.
     public void iniciarPartida() {
-        boolean achou;
+        boolean achou = false;
 
         for(int i = 6; i > 1; i--) {
             for(int j = 0; j < 4; j++) {
-                List<Pedra> pedras = jogadores[i].getPedras();
+                List<Pedra> pedras = jogadores[j].getPedras();
 
                 achou = acharCarroca(i, pedras, j);
-
+                
                 if(achou) {
                     break;
                 }
+            }
+            if(achou){
+                break;
             }
         }
         passes = 0;
