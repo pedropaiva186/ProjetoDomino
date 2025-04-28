@@ -16,10 +16,9 @@ public class Tabuleiro {
 
     public Tabuleiro(String[] nome, int qtdHumanos) {
         setDorme();
-        // Adicionei o atributo qtdHumanos para conseguir utilizar em métodos mais a frente.
         this.qtdHumanos = qtdHumanos;
 
-        // Fiz essa pequena modificação para permitir que haja mais jogadores humanos
+        // Criando os jogadores humanos a partir do número dado ao construtor
         for(int i = 0; i <= 3; i++) {
             if(i < this.qtdHumanos) {
                 jogadores[i] = new Humano(nome[i]);
@@ -28,6 +27,7 @@ public class Tabuleiro {
             }
         }
 
+        // Distribuindo as pedras para cada jogador
         for(int i = 0; i < 4; i++) {
             setBaralho(jogadores[i]);
         }
@@ -150,15 +150,15 @@ public class Tabuleiro {
         int[] pontos = new int[4];
         int menor = 100, index = 0, repet = 0;
         
+        // Verificando o index do jogador com a menor quantidade de pontos e se há jogadores com a mesma quantidade
+        // de pontos mínimos
         for(int i = 0; i < 4; i++){
             pontos[i] = jogadores[i].somaPontos();
             if(pontos[i] < menor) {
+                menor = pontos[i];
                 index = i;
-            }
-        }
-
-        for(int i = 0; i < 4; i++) {
-            if(pontos[i] == menor) {
+                repet = 1;
+            } else if(pontos[i] == menor) {
                 repet++;
             }
         }
