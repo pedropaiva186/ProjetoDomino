@@ -1,4 +1,6 @@
+import java.util.InputMismatchException;
 import java.util.concurrent.TimeUnit;
+
 import modelo.Leitor;
 import modelo.Tabuleiro;
 import modelo.erros_adicionais.PararAgora;
@@ -20,7 +22,14 @@ public class Main{
              */
             while(true) {
                 System.out.print("Informe a quantidade de jogadores: ");
-                qtdJogadores = Leitor.leitor.nextInt();
+                try{
+                    qtdJogadores = Leitor.leitor.nextInt();
+                }catch(InputMismatchException e) {
+                    System.out.println("Quantidade de jogadores fornecida inválida, por favor digite um valor de 0-4.");
+                    Leitor.leitor.nextLine();
+                    continue;
+                }   
+
                 if(qtdJogadores <= 4) {
                     break;
                 }

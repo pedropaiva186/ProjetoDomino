@@ -212,7 +212,14 @@ public class Tabuleiro {
 
         while (true) { 
             System.out.println("Digite em qual lado você quer jogar!\n0 para esquerda - 1 para direita");
-            decisao = Leitor.leitor.nextInt();
+            try{
+                decisao = Leitor.leitor.nextInt();
+            } catch(InputMismatchException e) {
+                System.out.println("Por favor, informe um valor numérico válido.");
+                Leitor.leitor.nextLine();
+                continue;
+            }
+
             if(1 >= decisao && decisao >= 0) {
                 return decisao == 1;
             }

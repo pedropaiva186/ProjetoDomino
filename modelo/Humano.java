@@ -38,7 +38,13 @@ public class Humano extends Jogador{
             while(true) {
                 // Mostra quais são as pedras que estão disponíveis no momento
                 TabuleiroView.showPedrasDisponiveis(ponta1, ponta2, this);
-                index = Leitor.leitor.nextInt();
+                try{
+                    index = Leitor.leitor.nextInt();
+                } catch(InputMismatchException e) {
+                    System.out.println("Índice inválido, por favor informe um índice numérico.");
+                    Leitor.leitor.nextLine();
+                    continue;
+                }
 
                 // Se caso o player quiser parar o jogo instantâneamente
                 if(index == 99) {
